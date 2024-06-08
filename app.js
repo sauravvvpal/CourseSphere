@@ -3,12 +3,6 @@ import { config } from "dotenv";
 import ErrorMiddleware from "./middlewares/Error.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
-
-// Define __dirname for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 config({
   path: "./config/config.env",
@@ -42,12 +36,6 @@ app.use("/api/v1", course);
 app.use("/api/v1", user);
 app.use("/api/v1", payment);
 app.use("/api/v1", other);
-
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
-});
 
 export default app;
 
