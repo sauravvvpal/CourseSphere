@@ -12,20 +12,31 @@ const app = express();
 
 // Using Middlewares
 app.use(express.json());
+
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
+
 app.use(cookieParser());
+
 const allowedOrigin = [
 
-  "https://course-sphere.vercel.app/",
+  "https://course-sphere.vercel.app",
 ]
 
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: (origin, callback) => {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
