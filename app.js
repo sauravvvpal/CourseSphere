@@ -18,9 +18,14 @@ app.use(
   })
 );
 app.use(cookieParser());
+const allowedOrigin = [
+
+  "https://course-sphere.vercel.app/",
+]
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: allowedOrigin,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
