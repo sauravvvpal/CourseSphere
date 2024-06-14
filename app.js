@@ -21,27 +21,18 @@ app.use(
 
 app.use(cookieParser());
 
-const allowedOrigin = [
+// const allowedOrigin = [
 
-  "https://course-sphere.vercel.app",
-]
+//   "https://course-sphere.vercel.app",
+// ]
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      console.log("Origin:", origin); // Debugging log
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
+    origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-
 
 // Importing & Using Routes
 import course from "./routes/courseRoutes.js";
